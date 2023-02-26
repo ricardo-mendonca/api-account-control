@@ -17,7 +17,8 @@ describe('Pessoas - Create', () => {
             .send({
                 cidadeId,
                 email: 'juca@gmail.com',
-                nomeCompleto: 'Juca silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
             });
 
         expect(res1.statusCode).toEqual(StatusCodes.CREATED);
@@ -28,7 +29,8 @@ describe('Pessoas - Create', () => {
             .post('/pessoas')
             .send({
                 cidadeId,
-                nomeCompleto: 'Juca silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
                 email: 'juca2@gmail.com',
             });
 
@@ -40,7 +42,8 @@ describe('Pessoas - Create', () => {
             .post('/pessoas')
             .send({
                 cidadeId,
-                nomeCompleto: 'Juca silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
                 email: 'jucaduplicado@gmail.com',
             });
         expect(res1.statusCode).toEqual(StatusCodes.CREATED);
@@ -51,7 +54,8 @@ describe('Pessoas - Create', () => {
             .send({
                 cidadeId,
                 email: 'jucaduplicado@gmail.com',
-                nomeCompleto: 'duplicado',
+                nome: 'Juca',
+                sobrenome: 'Silva',
             });
         expect(res2.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
         expect(res2.body).toHaveProperty('errors.default');
@@ -62,11 +66,12 @@ describe('Pessoas - Create', () => {
             .send({
                 cidadeId,
                 email: 'juca@gmail.com',
-                nomeCompleto: 'Ju',
+                nome: 'Ju',
+                sobrenome: 'Si',
             });
 
         expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
-        expect(res1.body).toHaveProperty('errors.body.nomeCompleto');
+        expect(res1.body).toHaveProperty('errors.body.nome');
     });
     it('Tenta criar registro sem nomeCompleto', async () => {
         const res1 = await testServer
@@ -77,14 +82,15 @@ describe('Pessoas - Create', () => {
             });
 
         expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
-        expect(res1.body).toHaveProperty('errors.body.nomeCompleto');
+        expect(res1.body).toHaveProperty('errors.body.nome');
     });
     it('Tenta criar registro sem email', async () => {
         const res1 = await testServer
             .post('/pessoas')
             .send({
                 cidadeId,
-                nomeCompleto: 'Juca da Silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
             });
 
         expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
@@ -96,7 +102,8 @@ describe('Pessoas - Create', () => {
             .send({
                 cidadeId,
                 email: 'juca gmail.com',
-                nomeCompleto: 'Juca da Silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
             });
 
         expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
@@ -107,7 +114,8 @@ describe('Pessoas - Create', () => {
             .post('/pessoas')
             .send({
                 email: 'juca@gmail.com',
-                nomeCompleto: 'Juca da Silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
             });
 
         expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
@@ -119,7 +127,8 @@ describe('Pessoas - Create', () => {
             .send({
                 cidadeId: 'teste',
                 email: 'juca@gmail.com',
-                nomeCompleto: 'Juca da Silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
             });
 
         expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
@@ -134,6 +143,7 @@ describe('Pessoas - Create', () => {
         expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
         expect(res1.body).toHaveProperty('errors.body.email');
         expect(res1.body).toHaveProperty('errors.body.cidadeId');
-        expect(res1.body).toHaveProperty('errors.body.nomeCompleto');
+        expect(res1.body).toHaveProperty('errors.body.nome');
+        expect(res1.body).toHaveProperty('errors.body.sobrenome');
     });
 });

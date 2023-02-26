@@ -16,7 +16,8 @@ describe('Pessoas - GetById', () => {
             .post('/pessoas')
             .send({
                 cidadeId,
-                nomeCompleto: 'Juca silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
                 email: 'jucagetbyid@gmail.com',
             });
         expect(res1.statusCode).toEqual(StatusCodes.CREATED);
@@ -25,7 +26,7 @@ describe('Pessoas - GetById', () => {
             .get(`/pessoas/${res1.body}`)
             .send();
         expect(resBuscada.statusCode).toEqual(StatusCodes.OK);
-        expect(resBuscada.body).toHaveProperty('nomeCompleto');
+        expect(resBuscada.body).toHaveProperty('nome');
     });
     it('Tenta buscar registro que não existe', async () => {
         const res1 = await testServer

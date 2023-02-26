@@ -17,7 +17,8 @@ describe('Pessoas - GetAll', () => {
             .send({
                 cidadeId,
                 email: 'jucagetall@gmail.com',
-                nomeCompleto: 'Juca silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
             });
         expect(res1.statusCode).toEqual(StatusCodes.CREATED);
 

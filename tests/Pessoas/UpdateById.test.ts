@@ -17,7 +17,8 @@ describe('Pessoas - UpdateById', () => {
             .post('/pessoas')
             .send({
                 cidadeId,
-                nomeCompleto: 'Juca silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
                 email: 'jucaupdate@gmail.com',
             });
         expect(res1.statusCode).toEqual(StatusCodes.CREATED);
@@ -26,7 +27,8 @@ describe('Pessoas - UpdateById', () => {
             .put(`/pessoas/${res1.body}`)
             .send({
                 cidadeId,
-                nomeCompleto: 'Juca silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
                 email: 'jucaupdates@gmail.com',
             });
         expect(resAtualizada.statusCode).toEqual(StatusCodes.NO_CONTENT);
@@ -37,7 +39,8 @@ describe('Pessoas - UpdateById', () => {
             .send({
                 cidadeId,
                 email: 'juca@gmail.com',
-                nomeCompleto: 'Juca silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
             });
 
         expect(res1.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);

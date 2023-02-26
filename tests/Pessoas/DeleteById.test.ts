@@ -17,7 +17,8 @@ describe('Pessoas - DeleteById', () => {
             .send({
                 cidadeId,
                 email: 'jucadelete@gmail.com',
-                nomeCompleto: 'Juca silva',
+                nome: 'Juca',
+                sobrenome: 'Silva',
             });
         expect(res1.statusCode).toEqual(StatusCodes.CREATED);
 
