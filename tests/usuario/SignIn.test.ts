@@ -4,17 +4,30 @@ import { testServer } from '../jest.setup';
 
 
 describe('Usuários - SignIn', () => {
+    let accessToken = '';
     beforeAll(async () => {
-        await testServer.post('/cadastrar').send({
-            nome: 'Jorge',
-            senha: '123456',
-            email: 'jorge@gmail.com',
-        });
+        const email = 'signIn@gmail.com';
+        await testServer.post('/cadastrar').send({ nome: 'Teste', email, senha: '123456' });
+        const signInRes = await testServer.post('/entrar').send({ email, senha: '123456' });
+
+        accessToken = signInRes.body.accessToken;
+    });
+
+    beforeAll(async () => {
+        await testServer
+            .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
+            .send({
+                nome: 'Jorge',
+                senha: '123456',
+                email: 'jorge@gmail.com',
+            });
     });
 
     it('Faz login', async () => {
         const res1 = await testServer
             .post('/entrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 email: 'jorge@gmail.com',
@@ -25,6 +38,7 @@ describe('Usuários - SignIn', () => {
     it('Senha errada', async () => {
         const res1 = await testServer
             .post('/entrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '1234567',
                 email: 'jorge@gmail.com',
@@ -35,6 +49,7 @@ describe('Usuários - SignIn', () => {
     it('Email errado', async () => {
         const res1 = await testServer
             .post('/entrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 email: 'jorgeeeeeee@gmail.com',
@@ -45,6 +60,7 @@ describe('Usuários - SignIn', () => {
     it('Formato de email inválido', async () => {
         const res1 = await testServer
             .post('/entrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 email: 'jorge gmail.com',
@@ -55,6 +71,7 @@ describe('Usuários - SignIn', () => {
     it('Senha muito pequena', async () => {
         const res1 = await testServer
             .post('/entrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '12',
                 email: 'jorge@gmail.com',
@@ -65,6 +82,7 @@ describe('Usuários - SignIn', () => {
     it('Não informado a senha', async () => {
         const res1 = await testServer
             .post('/entrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 email: 'jorge@gmail.com',
             });
@@ -74,6 +92,7 @@ describe('Usuários - SignIn', () => {
     it('Não informado email', async () => {
         const res1 = await testServer
             .post('/entrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
             });

@@ -4,9 +4,19 @@ import { testServer } from '../jest.setup';
 
 
 describe('Usuário - SignUp', () => {
+    let accessToken = '';
+    beforeAll(async () => {
+        const email = 'signUp@gmail.com';
+        await testServer.post('/cadastrar').send({ nome: 'Teste', email, senha: '123456' });
+        const signInRes = await testServer.post('/entrar').send({ email, senha: '123456' });
+
+        accessToken = signInRes.body.accessToken;
+    });
+
     it('Cadastra usuário 1', async () => {
         const res1 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 nome: 'Juca da Silva',
@@ -18,6 +28,7 @@ describe('Usuário - SignUp', () => {
     it('Cadastra usuário 2', async () => {
         const res1 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 nome: 'Pedro da Rosa',
@@ -29,6 +40,7 @@ describe('Usuário - SignUp', () => {
     it('Erro ao cadastrar um usuário com email duplicado', async () => {
         const res1 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 nome: 'Pedro da Rosa',
@@ -39,6 +51,7 @@ describe('Usuário - SignUp', () => {
 
         const res2 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 nome: 'Juca da Silva',
@@ -50,6 +63,7 @@ describe('Usuário - SignUp', () => {
     it('Erro ao cadastrar um usuário sem email', async () => {
         const res1 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 nome: 'Juca da Silva',
@@ -61,6 +75,7 @@ describe('Usuário - SignUp', () => {
     it('Erro ao cadastrar um usuário sem nome', async () => {
         const res1 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 // nome: 'Juca da Silva',
@@ -72,6 +87,7 @@ describe('Usuário - SignUp', () => {
     it('Erro ao cadastrar um usuário sem senha', async () => {
         const res1 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 // senha: '123456',
                 nome: 'Juca da Silva',
@@ -83,6 +99,7 @@ describe('Usuário - SignUp', () => {
     it('Erro ao cadastrar um usuário com email inválido', async () => {
         const res1 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 nome: 'Juca da Silva',
@@ -94,6 +111,7 @@ describe('Usuário - SignUp', () => {
     it('Erro ao cadastrar um usuário com senha muito pequena', async () => {
         const res1 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123',
                 nome: 'Juca da Silva',
@@ -105,6 +123,7 @@ describe('Usuário - SignUp', () => {
     it('Erro ao cadastrar um usuário com nome muito pequeno', async () => {
         const res1 = await testServer
             .post('/cadastrar')
+            .set({ Authorization: `Bearer ${accessToken}` })
             .send({
                 senha: '123456',
                 nome: 'Ju',
