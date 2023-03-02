@@ -1,12 +1,15 @@
 import { Router } from 'express';
 import { ensureAuthenticated } from '../shared/middleware';
-import { CidadesController, PessoasController, UsuariosController } from './../Controllers';
+import { CategoriaController, CidadesController, PessoasController, UsuariosController, } from './../Controllers';
 
 const router = Router();
 
 router.get('/', (_, res) => {
     return res.send('Olá Curioso');
 });
+
+router.post('/entrar', UsuariosController.signInValidation, UsuariosController.signIn);
+router.post('/cadastrar', UsuariosController.signUpValidation, UsuariosController.signUp);
 
 router.get('/cidades', ensureAuthenticated, CidadesController.getAllValidation, CidadesController.getAll);
 router.get('/cidades/:id', ensureAuthenticated, CidadesController.getByIdValidation, CidadesController.getById);
@@ -20,7 +23,8 @@ router.get('/pessoas/:id', ensureAuthenticated, PessoasController.getByIdValidat
 router.put('/pessoas/:id', ensureAuthenticated, PessoasController.updateByIdValidation, PessoasController.updateById);
 router.delete('/pessoas/:id', ensureAuthenticated, PessoasController.deleteByIdValidation, PessoasController.deleteById);
 
-router.post('/entrar', UsuariosController.signInValidation, UsuariosController.signIn);
-router.post('/cadastrar', UsuariosController.signUpValidation, UsuariosController.signUp);
+router.post('/categoria', ensureAuthenticated, CategoriaController.createValidation, CategoriaController.create);
+
+
 
 export { router };
