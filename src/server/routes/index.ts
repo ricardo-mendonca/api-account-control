@@ -23,7 +23,11 @@ router.get('/pessoas/:id', ensureAuthenticated, PessoasController.getByIdValidat
 router.put('/pessoas/:id', ensureAuthenticated, PessoasController.updateByIdValidation, PessoasController.updateById);
 router.delete('/pessoas/:id', ensureAuthenticated, PessoasController.deleteByIdValidation, PessoasController.deleteById);
 
+router.get('/categoria', ensureAuthenticated, CategoriaController.getAllValidation, CategoriaController.getAll);
 router.post('/categoria', ensureAuthenticated, CategoriaController.createValidation, CategoriaController.create);
+//router.get('/categoria/:id', ensureAuthenticated, CategoriaController.getByIdValidation, CategoriaController.getById);
+//router.put('/categoria/:id', ensureAuthenticated, CategoriaController.updateByIdValidation, CategoriaController.updateById);
+//router.delete('/categoria/:id', ensureAuthenticated, CategoriaController.deleteByIdValidation, CategoriaController.deleteById);
 
 
 
