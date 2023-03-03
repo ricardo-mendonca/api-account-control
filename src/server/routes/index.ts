@@ -25,7 +25,7 @@ router.delete('/pessoas/:id', ensureAuthenticated, PessoasController.deleteByIdV
 
 router.get('/categoria', ensureAuthenticated, CategoriaController.getAllValidation, CategoriaController.getAll);
 router.post('/categoria', ensureAuthenticated, CategoriaController.createValidation, CategoriaController.create);
-//router.get('/categoria/:id', ensureAuthenticated, CategoriaController.getByIdValidation, CategoriaController.getById);
+router.get('/categoria/:id', ensureAuthenticated, CategoriaController.getByIdValidation, CategoriaController.getById);
 //router.put('/categoria/:id', ensureAuthenticated, CategoriaController.updateByIdValidation, CategoriaController.updateById);
 //router.delete('/categoria/:id', ensureAuthenticated, CategoriaController.deleteByIdValidation, CategoriaController.deleteById);
 
