@@ -13,11 +13,14 @@ export const createValidation = validation(get => ({
     body: get<IBodyProps>(yup.object().shape({
         descricao: yup.string().required().min(3),
         ativo: yup.boolean().required(),
-        usuarioId: yup.number().integer().required(),
+        
     })),
 }));
 
 export const create = async (req: Request<{}, {}, IBodyProps>, res: Response) => {
+    //usuarioId
+    req.body.usuarioId = Number(req.headers.idUsuario);
+
     const result = await CategoriasProvider.create(req.body);
 
     if (result instanceof Error) {
