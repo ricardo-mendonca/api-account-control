@@ -41,6 +41,6 @@ export const updateById = async (req: Request<IParamProps, {}, IBodyProps>, res:
             }
         });
     }
-    console.log(result);
+    
     return res.status(StatusCodes.NO_CONTENT).json(result);
 };
