@@ -32,6 +32,6 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
             }
         });
     }
-
+    console.log(req.headers.idUsuario);
     return res.status(StatusCodes.OK).json(result);
 };
