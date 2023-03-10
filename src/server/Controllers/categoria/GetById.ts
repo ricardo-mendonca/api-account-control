@@ -12,6 +12,7 @@ interface IParamProps {
 export const getByIdValidation = validation(get => ({
     params: get<IParamProps>(yup.object().shape({
         id: yup.number().integer().required().moreThan(0),
+        usuarioId: yup.number().notRequired(),
     })),
 }));
 
@@ -23,8 +24,9 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
             }
         });
     }
-
-    const result = await CategoriasProvider.getById(req.params.id);
+    const usuarioId = Number(req.headers.idUsuario);
+    
+    const result = await CategoriasProvider.getById(req.params.id, usuarioId);
     if (result instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             errors: {

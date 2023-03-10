@@ -17,6 +17,7 @@ export const updateByIdValidation = validation(get => ({
     body: get<IBodyProps>(yup.object().shape({
         descricao: yup.string().required().min(3),
         ativo: yup.string().required(),
+        usuarioId: yup.number().notRequired(),
     })),
 
     params: get<IParamProps>(yup.object().shape({
@@ -32,8 +33,9 @@ export const updateById = async (req: Request<IParamProps, {}, IBodyProps>, res:
             }
         });
     }
+    const usuarioId = Number(req.headers.idUsuario);
 
-    const result = await CategoriasProvider.updateById(req.params.id, req.body);
+    const result = await CategoriasProvider.updateById(req.params.id, req.body, usuarioId);
 
     if (result instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

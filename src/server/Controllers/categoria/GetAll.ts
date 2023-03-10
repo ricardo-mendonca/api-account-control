@@ -16,12 +16,15 @@ export const getAllValidation = validation(get => ({
         filter: yup.string().notRequired().default(''),
         page: yup.number().integer().notRequired().moreThan(0).default(1),
         limit: yup.number().integer().notRequired().moreThan(0).default(7),
+        usuarioId: yup.number().notRequired(),
     })),
 }));
 
 export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
-    const result = await CategoriasProvider.getAll(req.query.page || 1, req.query.limit || 7, req.query.filter || '');
-    const count = await CategoriasProvider.count(req.query.filter);
+    const usuarioId = Number(req.headers.idUsuario);
+
+    const result = await CategoriasProvider.getAll(req.query.page || 1, req.query.limit || 7, req.query.filter || '',usuarioId);
+    const count = await CategoriasProvider.count(req.query.filter, usuarioId);
 
     if (result instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
