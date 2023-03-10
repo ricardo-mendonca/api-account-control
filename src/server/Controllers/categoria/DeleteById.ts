@@ -12,6 +12,7 @@ interface IParamProps {
 export const deleteByIdValidation = validation(get => ({
     params: get<IParamProps>(yup.object().shape({
         id: yup.number().integer().required().moreThan(0),
+        usuarioId: yup.number().notRequired(),
     })),
 }));
 
@@ -23,8 +24,9 @@ export const deleteById = async (req: Request<IParamProps>, res: Response) => {
             }
         });
     }
+    const usuarioId = Number(req.headers.idUsuario);
 
-    const result = await CategoriasProvider.deleteById(req.params.id);
+    const result = await CategoriasProvider.deleteById(req.params.id,usuarioId);
     if (result instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             errors: {
