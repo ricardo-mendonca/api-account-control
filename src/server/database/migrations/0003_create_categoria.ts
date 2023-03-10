@@ -7,7 +7,7 @@ export async function up(knex: Knex) {
         .createTable(ETableNames.categoria, table => {
             table.bigIncrements('id').primary().index();
             table.string('descricao').notNullable().checkLength('>=', 3);
-            table.string('ativo').notNullable();
+            table.boolean('ativo').notNullable();
 
             table
                 .bigInteger('usuarioId')

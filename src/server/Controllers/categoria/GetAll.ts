@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { CategoriasProvider } from '../../database/providers/categoria';
 import { validation } from '../../shared/middleware';
 
-interface IQueryProps{
+interface IQueryProps {
     page?: number;
     limit?: number;
     filter?: string;
@@ -19,7 +19,7 @@ export const getAllValidation = validation(get => ({
     })),
 }));
 
-export const getAll = async (req: Request<{}, {},{},IQueryProps>, res: Response)=> {
+export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
     const result = await CategoriasProvider.getAll(req.query.page || 1, req.query.limit || 7, req.query.filter || '');
     const count = await CategoriasProvider.count(req.query.filter);
 

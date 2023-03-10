@@ -6,16 +6,15 @@ import { CategoriasProvider } from './../../database/providers/categoria';
 import { validation } from '../../shared/middleware';
 import { ICategoria } from './../../database/models';
 
-
 interface IBodyProps extends Omit<ICategoria, 'id'> { }
 
-export const createValidation = validation(get => ({
-    body: get<IBodyProps>(yup.object().shape({
+export const createValidation = validation((getSchema) => ({
+    body: getSchema<IBodyProps>(yup.object().shape({
         descricao: yup.string().required().min(3),
-        ativo: yup.boolean().required(),
-        
+        ativo: yup.string().required(),
     })),
 }));
+
 
 export const create = async (req: Request<{}, {}, IBodyProps>, res: Response) => {
     //usuarioId
